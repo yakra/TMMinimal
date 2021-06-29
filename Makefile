@@ -13,7 +13,6 @@ CommonObjects = \
   classes/DBFieldLength/DBFieldLength.o \
   classes/ElapsedTime/ElapsedTime.o \
   classes/ErrorList/ErrorList.o \
-  classes/HighwaySegment/HighwaySegment.o \
   classes/HighwaySystem/HighwaySystem.o \
   classes/Region/Region.o \
   classes/Route/Route.o \

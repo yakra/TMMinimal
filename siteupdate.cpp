@@ -22,7 +22,6 @@ This module defines classes to represent the contents of a
 #include "classes/Datacheck/Datacheck.h"
 #include "classes/ElapsedTime/ElapsedTime.h"
 #include "classes/ErrorList/ErrorList.h"
-#include "classes/HighwaySegment/HighwaySegment.h"
 #include "classes/HighwaySystem/HighwaySystem.h"
 #include "classes/Region/Region.h"
 #include "classes/Route/Route.h"
