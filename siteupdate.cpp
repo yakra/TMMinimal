@@ -33,7 +33,7 @@ This module defines classes to represent the contents of a
 #include "functions/split.h"
 #include "functions/upper.h"
 #ifdef threading_enabled
-#include "threads/threads.h"
+#include "functions/threads.h"
 #endif
 void allbyregionactiveonly(std::mutex*);
 void allbyregionactivepreview(std::mutex*);
