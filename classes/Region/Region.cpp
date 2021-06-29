@@ -58,20 +58,6 @@ Region::Region (const std::string &line,
 			   + " bytes in regions.csv line " + line);
 }//*/
 
-/*std::string& Region::country_code()
-{	return country->first;
-}//*/
-
-/*std::string& Region::continent_code()
-{	return continent->first;
-}//*/
-
-/*void Region::insert_vertex(HGVertex* v)
-{	mtx.lock();
-	vertices.insert(v);
-	mtx.unlock();
-}//*/
-
 bool sort_regions_by_code(const Region *r1, const Region *r2)
 {	return r1->code < r2->code;
 }//*/
