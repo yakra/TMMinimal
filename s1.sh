@@ -31,12 +31,11 @@ fi
 
 # clear output dirs & execute each
 for X in "${execs[@]}"; do
-  rm  -f ./$X/TravelMapping.sql
-  rm -rf ./$X/logs/*.log
-  rm -rf ./$X/logs/users/*
-  rm -rf ./$X/nmp_merged/*
-  rm -rf ./$X/stats/*
-  rm -rf ./$X/graphs/*
+  rm -f  ./$X/TravelMapping.sql
+  rm -fr ./$X/logs;		mkdir -p ./$X/logs/users
+  rm -fr ./$X/nmp_merged;	mkdir -p ./$X/nmp_merged
+  rm -fr ./$X/stats;		mkdir -p ./$X/stats
+  rm -fr ./$X/graphs;		mkdir -p ./$X/graphs
   echo ./siteupdate$X $e $v $t -l ./$X/logs -n ./$X/nmp_merged -c ./$X/stats -g ./$X/graphs -u $tmdir/UserData/list_files -w $tmdir/HighwayData '|' tee ./$X/logs/siteupdate.log
        ./siteupdate$X $e $v $t -l ./$X/logs -n ./$X/nmp_merged -c ./$X/stats -g ./$X/graphs -u $tmdir/UserData/list_files -w $tmdir/HighwayData  |  tee ./$X/logs/siteupdate.log
 done
