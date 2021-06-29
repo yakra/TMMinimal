@@ -10,7 +10,6 @@
 #include "../Args/Args.h"
 #include "../Datacheck/Datacheck.h"
 #include "../ErrorList/ErrorList.h"
-#include "../HighwaySegment/HighwaySegment.h"
 #include "../HighwaySystem/HighwaySystem.h"
 #include "../Waypoint/Waypoint.h"
 #include "../WaypointQuadtree/WaypointQuadtree.h"
@@ -75,12 +74,6 @@ void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints, Er
 		}
 		point_list.push_back(w);
 		all_waypoints->insert(threadnum, w, 1);
-
-		// single-point Datachecks, and HighwaySegment
-		if (point_list.size() > 1)
-			// add HighwaySegment, if not first point
-			segment_list.push_back(new HighwaySegment(point_list[point_list.size()-2], w, this));
-					       // deleted on termination of program
 	}
 	delete[] wptdata;
 
