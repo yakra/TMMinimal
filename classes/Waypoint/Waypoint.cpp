@@ -147,32 +147,4 @@ std::string Waypoint::root_at_label()
 {	return route->root + "@" + label;
 }//*/
 
-/* Datacheck */
-
-bool Waypoint::label_too_long()
-{	// label longer than the DB can store
-	if (label.size() > DBFieldLength::label)
-	{	// save the excess beyond what can fit in a DB field, to put in the info/value column
-		std::string excess = label.data()+DBFieldLength::label-3;
-		// strip any partial multi-byte characters off the beginning
-		while (excess.front() < 0)	excess.erase(excess.begin());
-		// if it's too long for the info/value column,
-		if (excess.size() > DBFieldLength::dcErrValue-3)
-		{	// cut it down to what will fit,
-			excess = excess.substr(0, DBFieldLength::dcErrValue-6);
-			// strip any partial multi-byte characters off the end,
-			while (excess.back() < 0)	excess.erase(excess.end()-1);
-			// and append "..."
-			excess += "...";
-		}
-		// now truncate the label itself
-		label = label.substr(0, DBFieldLength::label-3);
-		// and strip any partial multi-byte characters off the end
-		while (label.back() < 0)	label.erase(label.end()-1);
-		Datacheck::add(route, label+"...", "", "", "LABEL_TOO_LONG", "..."+excess);
-		return 1;
-	}
-	return 0;
-}
-
 #undef pi

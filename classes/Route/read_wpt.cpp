@@ -67,8 +67,7 @@ void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints, Er
 		Waypoint *w = new Waypoint(lines[l], this);
 			      // deleted on termination of program, or immediately below if invalid
 		bool malformed_url = w->lat == 0 && w->lng == 0;
-		bool label_too_long = w->label_too_long();
-		if (malformed_url || label_too_long)
+		if (malformed_url)
 		{	delete w;
 			continue;
 		}
