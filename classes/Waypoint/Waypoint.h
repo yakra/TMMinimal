@@ -41,21 +41,5 @@ class Waypoint
 	std::string root_at_label();
 
 	// Datacheck
-	void distance_update(char *, double &, Waypoint *);
-	void duplicate_coords(std::unordered_set<Waypoint*> &, char *);
-	void label_invalid_char();
 	bool label_too_long();
-	void out_of_bounds(char *);
-	// checks for visible points
-	void bus_with_i();
-	void interstate_no_hyphen();
-	void label_invalid_ends();
-	void label_looks_hidden();
-	void label_parens();
-	void label_selfref(const char *);
-	void label_slashes(const char *);
-	void lacks_generic();
-	void underscore_datachecks(const char *);
-	void us_letter();
-	void visible_distance(char *, double &, Waypoint *&);
 };

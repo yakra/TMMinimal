@@ -77,32 +77,10 @@ void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints, Er
 		all_waypoints->insert(threadnum, w, 1);
 
 		// single-point Datachecks, and HighwaySegment
-		w->out_of_bounds(fstr);
-		w->duplicate_coords(coords_used, fstr);
-		w->label_invalid_char();
 		if (point_list.size() > 1)
-		{	w->distance_update(fstr, vis_dist, point_list[point_list.size()-2]);
 			// add HighwaySegment, if not first point
 			segment_list.push_back(new HighwaySegment(point_list[point_list.size()-2], w, this));
 					       // deleted on termination of program
-		}
-		// checks for visible points
-		if (!w->is_hidden)
-		{	const char *slash = strchr(w->label.data(), '/');
-			if (usa_flag && w->label.size() >= 2)
-			{	w->bus_with_i();
-				w->interstate_no_hyphen();
-				w->us_letter();
-			}
-			w->label_invalid_ends();
-			w->label_looks_hidden();
-			w->label_parens();
-			w->label_selfref(slash);
-			w->label_slashes(slash);
-			w->lacks_generic();
-			w->underscore_datachecks(slash);
-			w->visible_distance(fstr, vis_dist, last_visible);
-		}
 	}
 	delete[] wptdata;
 
