@@ -1,4 +1,6 @@
 class Waypoint;
+#include <list>
+#include <mutex>
 
 class WaypointQuadtree
 {	// This class defines a recursive quadtree structure to store

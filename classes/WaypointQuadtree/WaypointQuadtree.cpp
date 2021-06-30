@@ -1,10 +1,10 @@
 #define debug
 #ifdef debug
-  #include "../TravelerList/TravelerList.h"
+  #include <iostream>
   #define COND if (w->route->system->systemname == "usaca" || w->route->system->systemname == "usaal" || w->route->system->systemname == "usafl")
   #define DEBUG(WHAT) WHAT
-  #define   LOCK TravelerList::mtx.lock() /* repurpose a mutex not doing anything */
-  #define UNLOCK TravelerList::mtx.unlock() /* else ATM for locking terminal */
+  #define   LOCK terminal_mtx.lock()
+  #define UNLOCK terminal_mtx.unlock()
 #else
   #define DEBUG(WHAT)
 #endif
@@ -15,6 +15,9 @@
 #include "../Waypoint/Waypoint.h"
 #ifdef threading_enabled
 #endif
+
+extern std::mutex terminal_mtx;
+
 inline bool WaypointQuadtree::WaypointQuadtree::refined()
 {	return nw_child;
 }

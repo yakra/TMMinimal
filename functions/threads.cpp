@@ -1,7 +1,7 @@
 #include "../classes/HighwaySystem/HighwaySystem.h"
 #include "../classes/Route/Route.h"
-#include "../classes/TravelerList/TravelerList.h"
 #include "../classes/WaypointQuadtree/WaypointQuadtree.h"
+#include <iostream>
 
 #define debug
 void ReadWptThread
@@ -9,6 +9,7 @@ void ReadWptThread
 	ErrorList* el,WaypointQuadtree* all_waypoints
 )
 {	//printf("Starting ReadWptThread %02i\n", id); fflush(stdout);
+	extern std::mutex terminal_mtx;
 	while (HighwaySystem::it != HighwaySystem::syslist.end())
 	{	hs_mtx->lock();
 		if (HighwaySystem::it == HighwaySystem::syslist.end())
@@ -20,7 +21,7 @@ void ReadWptThread
 		HighwaySystem::it++;
 	      #ifdef debug
 		HighwaySystem::in_flight[id] = h;
-		TravelerList::mtx.lock();
+		terminal_mtx.lock();
 		for (HighwaySystem* sys : HighwaySystem::in_flight)
 		  if (sys)
 		  {	std::cout << "| " << sys->systemname;
@@ -29,7 +30,7 @@ void ReadWptThread
 		  }
 		  else std::cout << "           ";
 		std::cout << " |" << std::endl;
-		TravelerList::mtx.unlock();
+		terminal_mtx.unlock();
 	      #endif
 		hs_mtx->unlock();
 		std::cout << h->systemname << std::flush;
