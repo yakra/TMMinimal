@@ -25,7 +25,6 @@ This module defines classes to represent the contents of a
 #include "classes/HighwaySystem/HighwaySystem.h"
 #include "classes/Region/Region.h"
 #include "classes/Route/Route.h"
-#include "classes/TravelerList/TravelerList.h"
 #include "classes/Waypoint/Waypoint.h"
 #include "functions/crawl_hwy_data.h"
 #include "functions/split.h"
@@ -33,9 +32,8 @@ This module defines classes to represent the contents of a
 #ifdef threading_enabled
 #include "functions/threads.h"
 #endif
-void allbyregionactiveonly(std::mutex*);
-void allbyregionactivepreview(std::mutex*);
 using namespace std;
+mutex terminal_mtx;
 
 int main(int argc, char *argv[])
 {	ifstream file;
@@ -55,23 +53,6 @@ int main(int argc, char *argv[])
 
 	// create ErrorList
 	ErrorList el;
-
-	// Get list of travelers in the system
-	TravelerList::ids = move(Args::userlist);
-	if (TravelerList::ids.empty())
-	{	DIR *dir;
-		dirent *ent;
-		if ((dir = opendir (Args::userlistfilepath.data())) != NULL)
-		{	while ((ent = readdir (dir)) != NULL)
-			{	string trav = ent->d_name;
-				if (trav.size() > 5 && trav.substr(trav.size()-5, string::npos) == ".list")
-					TravelerList::ids.push_back(trav);
-			}
-			closedir(dir);
-		}
-		else	el.add_error("Error opening user list file path \""+Args::userlistfilepath+"\". (Not found?)");
-	}
-	else for (string &id : TravelerList::ids) id += ".list";
 
 	// read region, country, continent descriptions
 	cout << et.et() << "Reading region, country, and continent descriptions." << endl;

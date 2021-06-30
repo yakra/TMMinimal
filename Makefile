@@ -17,7 +17,6 @@ CommonObjects = \
   classes/Region/Region.o \
   classes/Route/Route.o \
   classes/Route/read_wpt.o \
-  classes/TravelerList/TravelerList.o \
   classes/Waypoint/Waypoint.o \
   functions/crawl_hwy_data.o \
   functions/lower.o \

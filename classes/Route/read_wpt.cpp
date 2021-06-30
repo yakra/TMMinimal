@@ -1,6 +1,5 @@
 #define debug
 #ifdef debug
-  #include "../TravelerList/TravelerList.h"
   #define   DEBUG(WHAT) WHAT
 #else
   #define   DEBUG(WHAT)
@@ -18,6 +17,7 @@
 
 void Route::read_wpt(unsigned int threadnum, ErrorList *el, bool usa_flag)
 {	/* read data into the Route's waypoint list from a .wpt file */
+	extern std::mutex terminal_mtx;
 	//cout << "read_wpt on " << str() << endl;
 	std::string filename = Args::highwaydatapath + "/hwy_data" + "/" + rg_str + "/" + system->systemname + "/" + root + ".wpt";
 	// remove full path from all_wpt_files list
@@ -74,9 +74,9 @@ void Route::read_wpt(unsigned int threadnum, ErrorList *el, bool usa_flag)
 	}
 	delete[] wptdata;
 
-	DEBUG(TravelerList::mtx.lock();) // repurpose a mutex not doing anything ATM for locking terminal
+	DEBUG(terminal_mtx.lock();) // repurpose a mutex not doing anything ATM for locking terminal
 	std::cout << '.' << std::flush;
-	DEBUG(TravelerList::mtx.unlock();)
+	DEBUG(terminal_mtx.unlock();)
 	//std::cout << str() << std::flush;
 	//print_route();
 }
