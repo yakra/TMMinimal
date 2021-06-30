@@ -1,5 +1,4 @@
 #include "Route.h"
-#include "../ConnectedRoute/ConnectedRoute.h"
 #include "../Datacheck/Datacheck.h"
 #include "../DBFieldLength/DBFieldLength.h"
 #include "../ErrorList/ErrorList.h"
@@ -113,32 +112,4 @@ std::string Route::str()
 std::string Route::readable_name()
 {	// return a string for a human-readable route name
 	return rg_str + " " + route + banner + abbrev;
-}//*/
-
-std::string Route::list_entry_name()
-{	// return a string for a human-readable route name in the
-	// format expected in traveler list files
-	return route + banner + abbrev;
-}//*/
-
-Waypoint* Route::con_beg()
-{	return is_reversed ? point_list.back() : point_list.front();
-}//*/
-
-Waypoint* Route::con_end()
-{	return is_reversed ? point_list.front() : point_list.back();
-}//*/
-
-// datacheck
-void Route::con_mismatch()
-{	if (route != con_route->route)
-		Datacheck::add(this, "", "", "", "CON_ROUTE_MISMATCH",
-			       route+" <-> "+con_route->route);
-	if (banner != con_route->banner)
-	  if (abbrev.size() && abbrev == con_route->banner)
-		Datacheck::add(this, "", "", "", "ABBREV_AS_CON_BANNER", system->systemname + "_con.csv#L" +
-			       std::to_string(system->con_route_index(con_route)+2));
-	  else	Datacheck::add(this, "", "", "", "CON_BANNER_MISMATCH",
-			       (banner.size() ? banner : "(blank)") + " <-> " +
-			       (con_route->banner.size() ? con_route->banner : "(blank)"));
 }//*/

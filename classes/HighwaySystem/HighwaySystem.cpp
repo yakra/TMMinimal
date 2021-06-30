@@ -1,6 +1,5 @@
 #include "HighwaySystem.h"
 #include "../Args/Args.h"
-#include "../ConnectedRoute/ConnectedRoute.h"
 #include "../DBFieldLength/DBFieldLength.h"
 #include "../ErrorList/ErrorList.h"
 #include "../Region/Region.h"
@@ -74,35 +73,4 @@ HighwaySystem::HighwaySystem(std::string &line, ErrorList &el, std::vector<std::
 		}
 	     }
 	file.close();
-
-	// read connected routes CSV
-	file.open(Args::highwaydatapath+"/hwy_data/_systems"+"/"+systemname+"_con.csv");
-	if (!file) el.add_error("Could not open "+Args::highwaydatapath+"/hwy_data/_systems"+"/"+systemname+"_con.csv");
-	else {	getline(file, line); // ignore header line
-		while(getline(file, line))
-		{	if (line.empty()) continue;
-			// trim DOS newlines & trailing whitespace
-			while ( strchr("\r\t ", line.back()) ) line.pop_back();
-			con_route_list.push_back(new ConnectedRoute(line, this, el));
-						 // deleted on termination of program
-		}
-	     }
-	file.close();
-}
-
-/* Return whether this is an active system */
-bool HighwaySystem::active()
-{	return level == 'a';
-}
-
-/* Return whether this is an active or preview system */
-bool HighwaySystem::active_or_preview()
-{	return level == 'a' || level == 'p';
-}
-
-/* Return index of a specified ConnectedRoute within con_route_list */
-size_t HighwaySystem::con_route_index(ConnectedRoute* cr)
-{	for (size_t i = 0; i < con_route_list.size(); i++)
-	  if (con_route_list[i] == cr) return i;
-	return -1; // error, ConnectedRoute not found
 }
