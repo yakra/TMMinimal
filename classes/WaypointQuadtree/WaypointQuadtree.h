@@ -13,6 +13,4 @@ class WaypointQuadtree
 
 	bool refined();
 	WaypointQuadtree(double, double, double, double);
-	void refine(unsigned int);
-	void insert(unsigned int, Waypoint*, bool);
 };

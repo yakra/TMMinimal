@@ -74,7 +74,6 @@ void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints, Er
 			continue;
 		}
 		point_list.push_back(w);
-		all_waypoints->insert(threadnum, w, 1);
 
 		// single-point Datachecks, and HighwaySegment
 		w->out_of_bounds(fstr);
