@@ -13,12 +13,11 @@
 #include "../HighwaySegment/HighwaySegment.h"
 #include "../HighwaySystem/HighwaySystem.h"
 #include "../Waypoint/Waypoint.h"
-#include "../WaypointQuadtree/WaypointQuadtree.h"
 #include <cstring>
 #include <fstream>
 #include <unordered_set>
 
-void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints, ErrorList *el, bool usa_flag)
+void Route::read_wpt(unsigned int threadnum, ErrorList *el, bool usa_flag)
 {	/* read data into the Route's waypoint list from a .wpt file */
 	//cout << "read_wpt on " << str() << endl;
 	std::string filename = Args::highwaydatapath + "/hwy_data" + "/" + rg_str + "/" + system->systemname + "/" + root + ".wpt";

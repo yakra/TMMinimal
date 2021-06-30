@@ -81,7 +81,7 @@ class Route
 	Route(std::string &, HighwaySystem *, ErrorList &);
 
 	std::string str();
-	void read_wpt(unsigned int, WaypointQuadtree *, ErrorList *, bool);
+	void read_wpt(unsigned int, ErrorList *, bool);
 	std::string readable_name();
 	std::string list_entry_name();
 	void con_mismatch();
