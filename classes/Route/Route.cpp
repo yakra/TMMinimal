@@ -104,11 +104,6 @@ Route::Route(std::string &line, HighwaySystem *sys, ErrorList &el)
 	}
 }
 
-std::string Route::str()
-{	// printable version of the object
-	return root + " (" + std::to_string(point_list.size()) + " total points)";
-}//*/
-
 std::string Route::readable_name()
 {	// return a string for a human-readable route name
 	return rg_str + " " + route + banner + abbrev;
