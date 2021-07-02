@@ -21,8 +21,8 @@ HighwaySystem::HighwaySystem(std::string &line, ErrorList &el, std::vector<std::
 	split(line, fields, NumFields, ';');
 	is_valid = 1;
 
-	// Removing field length sanity checks, as TMMinimal is to be
-	// tested with HighwayData commit known to have valid data
+	// Removing sanity checks, as TMMinimal is to be tested
+	// with a HighwayData commit known to have valid data
 
 	// CountryCode
 	country = country_or_continent_by_code(country_str, countries);

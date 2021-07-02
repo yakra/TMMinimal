@@ -28,45 +28,14 @@ Route::Route(std::string &line, HighwaySystem *sys, ErrorList &el)
 	std::string sys_str, arn_str;
 	std::string* fields[8] = {&sys_str, &rg_str, &route, &banner, &abbrev, &city, &root, &arn_str};
 	split(line, fields, NumFields, ';');
-	if (NumFields != 8)
-	{	el.add_error("Could not parse " + sys->systemname
-			   + ".csv line: [" + line + "], expected 8 fields, found " + std::to_string(NumFields));
-		root.clear(); // in case it was filled by a line with 7 or 9+ fields
-		return;
-	}
+
+	// Removing sanity checks, as TMMinimal is to be tested
+	// with a HighwayData commit known to have valid data
+
 	// system
 	system = sys;
-	if (system->systemname != sys_str)
-		el.add_error("System mismatch parsing " + system->systemname
-			   + ".csv line [" + line + "], expected " + system->systemname);
 	// region
-	try {	region = Region::code_hash.at(rg_str);
-	    }
-	catch (const std::out_of_range& oor)
-	    {	el.add_error("Unrecognized region in " + system->systemname
-			   + ".csv line: " + line);
-		region = Region::code_hash.at("error");
-	    }
-	// route
-	if (route.size() > DBFieldLength::route)
-		el.add_error("Route > " + std::to_string(DBFieldLength::route)
-			   + " bytes in " + system->systemname + ".csv line: " + line);
-	// banner
-	if (banner.size() > DBFieldLength::banner)
-		el.add_error("Banner > " + std::to_string(DBFieldLength::banner)
-			   + " bytes in " + system->systemname + ".csv line: " + line);
-	// abbrev
-	if (abbrev.size() > DBFieldLength::abbrev)
-		el.add_error("Abbrev > " + std::to_string(DBFieldLength::abbrev)
-			   + " bytes in " + system->systemname + ".csv line: " + line);
-	// city
-	if (city.size() > DBFieldLength::city)
-		el.add_error("City > " + std::to_string(DBFieldLength::city)
-			   + " bytes in " + system->systemname + ".csv line: " + line);
-	// root
-	if (root.size() > DBFieldLength::root)
-		el.add_error("Root > " + std::to_string(DBFieldLength::root)
-			   + " bytes in " + system->systemname + ".csv line: " + line);
+	region = Region::code_hash.at(rg_str);
 	lower(root.data());
 	// alt_route_names
 	upper(arn_str.data());
