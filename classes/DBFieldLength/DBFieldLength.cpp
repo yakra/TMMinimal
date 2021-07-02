@@ -9,7 +9,6 @@ const size_t DBFieldLength::continentCode = 3;
 const size_t DBFieldLength::continentName = 15;
 const size_t DBFieldLength::countryCode = 3;
 const size_t DBFieldLength::countryName = 32;
-const size_t DBFieldLength::dcErrCode = 22;
 const size_t DBFieldLength::label = 26;
 const size_t DBFieldLength::regionCode = 8;
 const size_t DBFieldLength::regionName = 48;

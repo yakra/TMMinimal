@@ -11,7 +11,6 @@ class DBFieldLength
 	static const size_t continentName;
 	static const size_t countryCode;
 	static const size_t countryName;
-	static const size_t dcErrCode;
 	static const size_t label;
 	static const size_t regionCode;
 	static const size_t regionName;
