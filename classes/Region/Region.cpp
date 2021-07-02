@@ -57,7 +57,3 @@ Region::Region (const std::string &line,
 		el.add_error("Region type > " + std::to_string(DBFieldLength::regiontype)
 			   + " bytes in regions.csv line " + line);
 }//*/
-
-bool sort_regions_by_code(const Region *r1, const Region *r2)
-{	return r1->code < r2->code;
-}//*/

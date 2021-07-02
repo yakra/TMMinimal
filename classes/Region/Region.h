@@ -56,5 +56,3 @@ class Region
 		std::vector<std::pair<std::string, std::string>>&,
 		ErrorList&);
 };
-
-bool sort_regions_by_code(const Region*, const Region*);
