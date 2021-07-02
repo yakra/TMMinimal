@@ -20,9 +20,7 @@ CommonObjects = \
   classes/Route/read_wpt.o \
   classes/Waypoint/Waypoint.o \
   functions/crawl_hwy_data.o \
-  functions/lower.o \
   functions/split.o \
-  functions/upper.o \
   functions/valid_num_str.o
 
 .PHONY: all clean
