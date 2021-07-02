@@ -35,9 +35,6 @@ class HighwaySystem
 	char level; // 'a' for active, 'p' for preview, 'd' for devel
 
 	std::vector<Route*> route_list;
-	std::vector<ConnectedRoute*> con_route_list;
-	std::unordered_map<Region*, double> mileage_by_region;
-	std::unordered_set<HGVertex*> vertices;
 	std::unordered_set<std::string>listnamesinuse, unusedaltroutenames;
 	std::mutex lniu_mtx, uarn_mtx;
 	bool is_valid;
@@ -47,8 +44,4 @@ class HighwaySystem
 	static std::vector<HighwaySystem*> in_flight;
 
 	HighwaySystem(std::string &, ErrorList &, std::vector<std::pair<std::string,std::string>> &);
-
-	bool active();			// Return whether this is an active system
-	bool active_or_preview();	// Return whether this is an active or preview system
-	size_t con_route_index(ConnectedRoute*); // same thing for ConnectedRoutes
 };

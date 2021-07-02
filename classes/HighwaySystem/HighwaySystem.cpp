@@ -26,33 +26,17 @@ HighwaySystem::HighwaySystem(std::string &line, ErrorList &el, std::vector<std::
 		return;
 	}
 	is_valid = 1;
-	// System
-	if (systemname.size() > DBFieldLength::systemName)
-		el.add_error("System code > " + std::to_string(DBFieldLength::systemName)
-			   + " bytes in " + Args::systemsfile + " line " + line);
+
+	// Removing field length sanity checks, as TMMinimal is to be
+	// tested with HighwayData commit known to have valid data
+
 	// CountryCode
 	country = country_or_continent_by_code(country_str, countries);
-	if (!country)
-	{	el.add_error("Could not find country matching " + Args::systemsfile + " line: " + line);
-		country = country_or_continent_by_code("error", countries);
-	}
-	// Name
-	if (fullname.size() > DBFieldLength::systemFullName)
-		el.add_error("System name > " + std::to_string(DBFieldLength::systemFullName)
-			   + " bytes in " + Args::systemsfile + " line " + line);
-	// Color
-	if (color.size() > DBFieldLength::color)
-		el.add_error("Color > " + std::to_string(DBFieldLength::color)
-			   + " bytes in " + Args::systemsfile + " line " + line);
 	// Tier
 	char *endptr;
 	tier = strtol(tier_str.data(), &endptr, 10);
-	if (*endptr || tier < 1)
-		el.add_error("Invalid tier in " + Args::systemsfile + " line " + line);
 	// Level
 	level = level_str[0];
-	if (level_str != "active" && level_str != "preview" && level_str != "devel")
-		el.add_error("Unrecognized level in " + Args::systemsfile + " line: " + line);
 
 	std::cout << systemname << '.' << std::flush;
 
