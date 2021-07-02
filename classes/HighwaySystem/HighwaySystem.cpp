@@ -19,12 +19,6 @@ HighwaySystem::HighwaySystem(std::string &line, ErrorList &el, std::vector<std::
 	std::string country_str, tier_str, level_str;
 	std::string* fields[6] = {&systemname, &country_str, &fullname, &color, &tier_str, &level_str};
 	split(line, fields, NumFields, ';');
-	if (NumFields != 6)
-	{	el.add_error("Could not parse " + Args::systemsfile
-			   + " line: [" + line + "], expected 6 fields, found " + std::to_string(NumFields));
-		is_valid = 0;
-		return;
-	}
 	is_valid = 1;
 
 	// Removing field length sanity checks, as TMMinimal is to be
