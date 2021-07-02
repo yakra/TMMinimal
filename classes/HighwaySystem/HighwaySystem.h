@@ -18,12 +18,6 @@ class HighwaySystem
 	With the implementation of three levels of systems (active,
 	preview, devel), added parameter and field here, to be stored in
 	DB
-
-	After construction and when all Route entries are made, a _con.csv
-	file is read that defines the connected routes in the system.
-	In most cases, the connected route is just a single Route, but when
-	a designation within the same system crosses region boundaries,
-	a connected route defines the entirety of the route.
 	*/
 
 	public:

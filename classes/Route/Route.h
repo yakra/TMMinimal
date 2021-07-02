@@ -1,11 +1,9 @@
-class ConnectedRoute;
 class ErrorList;
 class HighwaySegment;
 class HighwaySystem;
 class Region;
 class Waypoint;
 class WaypointQuadtree;
-#include <deque>
 #include <mutex>
 #include <unordered_map>
 #include <unordered_set>
@@ -58,21 +56,9 @@ class Route
 	std::string abbrev;
 	std::string city;
 	std::string root;
-	std::deque<std::string> alt_route_names;
-	ConnectedRoute *con_route;
 
 	std::vector<Waypoint*> point_list;
-	std::unordered_set<std::string> labels_in_use;
-	std::unordered_set<std::string> unused_alt_labels;
-	std::unordered_set<std::string> duplicate_labels;
-	std::unordered_map<std::string, unsigned int> pri_label_hash, alt_label_hash;
-	std::mutex liu_mtx;	// for locking the labels_in_use set when inserting labels during TravelerList processing
-	std::mutex ual_mtx;	// for locking the unused_alt_labels set when removing in-use alt_labels
 	std::vector<HighwaySegment*> segment_list;
-	std::string* last_update;
-	double mileage;
-	int rootOrder;
-	bool is_reversed;
 
 	static std::unordered_set<std::string>	all_wpt_files;
 	static std::mutex awf_mtx;		// for locking the all_wpt_files set when erasing processed WPTs

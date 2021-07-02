@@ -8,12 +8,7 @@ std::mutex Route::awf_mtx;
 Route::Route(std::string &line, HighwaySystem *sys, ErrorList &el)
 {	/* initialize object from a .csv file line,
 	but do not yet read in waypoint file */
-	con_route = 0;
-	mileage = 0;
-	rootOrder = -1; // order within connected route
 	region = 0;	// if this stays 0, setup has failed due to bad .csv data
-	is_reversed = 0;
-	last_update = 0;
 
 	// parse chopped routes csv line
 	size_t NumFields = 8;
