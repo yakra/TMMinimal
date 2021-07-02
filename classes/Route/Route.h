@@ -74,12 +74,10 @@ class Route
 	int rootOrder;
 	bool is_reversed;
 
-	static std::unordered_map<std::string, Route*> root_hash, pri_list_hash, alt_list_hash;
 	static std::unordered_set<std::string>	all_wpt_files;
 	static std::mutex awf_mtx;		// for locking the all_wpt_files set when erasing processed WPTs
 
 	Route(std::string &, HighwaySystem *, ErrorList &);
 
 	void read_wpt(unsigned int, WaypointQuadtree *, ErrorList *, bool);
-	std::string readable_name();
 };
