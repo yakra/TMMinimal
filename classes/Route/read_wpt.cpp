@@ -40,13 +40,7 @@ void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints)
 	{	for (spn = strcspn(c, "\n\r"); c[spn] == '\n' || c[spn] == '\r'; spn++) c[spn] = 0;
 		lines.emplace_back(c);
 	}
-
 	lines.push_back(wptdata+wptdatasize+1); // add a dummy "past-the-end" element to make lines[l+1]-2 work
-	// set to be used for finding duplicate coordinates
-	std::unordered_set<Waypoint*> coords_used;
-	double vis_dist = 0;
-	Waypoint *last_visible = 0;
-	char fstr[112];
 
 	for (unsigned int l = 0; l < lines.size()-1; l++)
 	{	// strip whitespace
@@ -60,11 +54,6 @@ void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints)
 		if (lines[l][0] == 0) continue;
 		Waypoint *w = new Waypoint(lines[l], this);
 			      // deleted on termination of program, or immediately below if invalid
-		bool malformed_url = w->lat == 0 && w->lng == 0;
-		if (malformed_url)
-		{	delete w;
-			continue;
-		}
 		point_list.push_back(w);
 		all_waypoints->insert(threadnum, w, 1);
 	}
@@ -73,6 +62,4 @@ void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints)
 	DEBUG(terminal_mtx.lock();)
 	std::cout << '.' << std::flush;
 	DEBUG(terminal_mtx.unlock();)
-	//std::cout << str() << std::flush;
-	//print_route();
 }
