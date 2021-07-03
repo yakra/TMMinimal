@@ -3,8 +3,6 @@
 class DBFieldLength
 {	public:
 	// constants
-	static const size_t continentCode;
-	static const size_t continentName;
 	static const size_t countryCode;
 	static const size_t countryName;
 	static const size_t label;
