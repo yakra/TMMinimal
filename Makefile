@@ -14,8 +14,7 @@ CommonObjects = \
   classes/Route/Route.o \
   classes/Route/read_wpt.o \
   classes/Waypoint/Waypoint.o \
-  functions/split.o \
-  functions/valid_num_str.o
+  functions/split.o
 
 .PHONY: all clean
 all: siteupdate siteupdateST

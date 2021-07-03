@@ -2,7 +2,6 @@
 #include "Waypoint.h"
 #include "../HighwaySystem/HighwaySystem.h"
 #include "../Route/Route.h"
-#include "../../functions/valid_num_str.h"
 #include <cmath>
 #include <cstring>
 
@@ -40,34 +39,8 @@ Waypoint::Waypoint(char *line, Route *rte)
 	if (latBeg == 3 || lonBeg == 3)
 	{	lat = 0;	lng = 0;	return;
 	}
-	bool valid_coords = 1;
-	if (!valid_num_str(URL.data()+latBeg, '&'))
-	{	size_t ampersand = URL.find('&', latBeg);
-		std::string lat_string = (ampersand == -1) ? URL.data()+latBeg : URL.substr(latBeg, ampersand-latBeg);
-		if (lat_string.size() > 59)
-		{	lat_string = lat_string.substr(0, 59-3);
-			while (lat_string.back() < 0)	lat_string.erase(lat_string.end()-1);
-			lat_string += "...";
-		}
-		valid_coords = 0;
-	}
-	if (!valid_num_str(URL.data()+lonBeg, '&'))
-	{	size_t ampersand = URL.find('&', lonBeg);
-		std::string lng_string = (ampersand == -1) ? URL.data()+lonBeg : URL.substr(lonBeg, ampersand-lonBeg);
-		if (lng_string.size() > 59)
-		{	lng_string = lng_string.substr(0, 59-3);
-			while (lng_string.back() < 0)	lng_string.erase(lng_string.end()-1);
-			lng_string += "...";
-		}
-		valid_coords = 0;
-	}
-	if (valid_coords)
-	     {	lat = strtod(&URL[latBeg], 0);
-		lng = strtod(&URL[lonBeg], 0);
-	     }
-	else {	lat = 0;
-		lng = 0;
-	     }
+	lat = strtod(&URL[latBeg], 0);
+	lng = strtod(&URL[lonBeg], 0);
 }
 
 bool Waypoint::same_coords(Waypoint *other)
