@@ -37,7 +37,7 @@ mutex terminal_mtx;
 int main(int argc, char *argv[])
 {	ifstream file;
 	string line;
-	mutex list_mtx, term_mtx;
+	mutex list_mtx;
 
 	// argument parsing
 	if (Args::init(argc, argv)) return 1;
@@ -54,42 +54,7 @@ int main(int argc, char *argv[])
 	ErrorList el;
 
 	// read region, country, continent descriptions
-	cout << et.et() << "Reading region, country, and continent descriptions." << endl;
-
-	// continents
-	vector<pair<string, string>> continents;
-	file.open(Args::highwaydatapath+"/continents.csv");
-	if (!file) el.add_error("Could not open "+Args::highwaydatapath+"/continents.csv");
-	else {	getline(file, line); // ignore header line
-		while(getline(file, line))
-		{	if (line.back() == 0x0D) line.erase(line.end()-1);	// trim DOS newlines
-			if (line.empty()) continue;
-			size_t delim = line.find(';');
-			if (delim == string::npos)
-			{	el.add_error("Could not parse continents.csv line: [" + line
-					   + "], expected 2 fields, found 1");
-				continue;
-			}
-			string code = line.substr(0,delim);
-			string name = line.substr(delim+1);
-			if (name.find(';') != string::npos)
-			{	el.add_error("Could not parse continents.csv line: [" + line
-					   + "], expected 2 fields, found 3");
-				continue;
-			}
-			// verify field lengths
-			if (code.size() > DBFieldLength::continentCode)
-				el.add_error("Continent code > " + std::to_string(DBFieldLength::continentCode)
-					   + " bytes in continents.csv line " + line);
-			if (name.size() > DBFieldLength::continentName)
-				el.add_error("Continent name > " + std::to_string(DBFieldLength::continentName)
-					   + " bytes in continents.csv line " + line);
-			continents.emplace_back(pair<string, string>(code, name));
-		}
-	     }
-	file.close();
-	// create a dummy continent to catch unrecognized continent codes in .csv files
-	continents.emplace_back(pair<string, string>("error", "unrecognized continent code"));
+	cout << et.et() << "Reading region, country descriptions." << endl;
 
 	// countries
 	vector<pair<string, string>> countries;
@@ -133,7 +98,7 @@ int main(int argc, char *argv[])
 		while(getline(file, line))
 		{	if (line.back() == 0x0D) line.erase(line.end()-1);	// trim DOS newlines
 			if (line.empty()) continue;
-			Region* r = new Region(line, countries, continents, el);
+			Region* r = new Region(line, countries, el);
 				    // deleted on termination of program
 			if (r->is_valid)
 			{	Region::allregions.push_back(r);
@@ -143,7 +108,7 @@ int main(int argc, char *argv[])
 	     }
 	file.close();
 	// create a dummy region to catch unrecognized region codes in .csv files
-	Region::allregions.push_back(new Region("error;unrecognized region code;error;error;unrecognized region code", countries, continents, el));
+	Region::allregions.push_back(new Region("error;unrecognized region code;error;error;unrecognized region code", countries, el));
 	Region::code_hash[Region::allregions.back()->code] = Region::allregions.back();
 
 	// Create a list of HighwaySystem objects, one per system in systems.csv file

@@ -14,7 +14,6 @@ std::unordered_map<std::string, Region*> Region::code_hash;
 
 Region::Region (const std::string &line,
 		std::vector<std::pair<std::string, std::string>> &countries,
-		std::vector<std::pair<std::string, std::string>> &continents,
 		ErrorList &el)
 {	active_only_mileage = 0;
 	active_preview_mileage = 0;
@@ -26,7 +25,6 @@ Region::Region (const std::string &line,
 	split(line, fields, NumFields, ';');
 	if (NumFields != 5)
 	{	el.add_error("Could not parse regions.csv line: [" + line + "], expected 5 fields, found " + std::to_string(NumFields));
-		continent = country_or_continent_by_code("error", continents);
 		country   = country_or_continent_by_code("error", countries);
 		is_valid = 0;
 		return;
@@ -47,11 +45,7 @@ Region::Region (const std::string &line,
 		country = country_or_continent_by_code("error", countries);
 	}
 	// continent
-	continent = country_or_continent_by_code(continent_str, continents);
-	if (!continent)
-	{	el.add_error("Could not find continent matching regions.csv line: " + line);
-		continent = country_or_continent_by_code("error", continents);
-	}
+	continent = 0;
 	// regionType
 	if (type.size() > DBFieldLength::regiontype)
 		el.add_error("Region type > " + std::to_string(DBFieldLength::regiontype)

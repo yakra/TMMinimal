@@ -53,6 +53,5 @@ class Region
 
 	Region (const std::string&,
 		std::vector<std::pair<std::string, std::string>>&,
-		std::vector<std::pair<std::string, std::string>>&,
 		ErrorList&);
 };
