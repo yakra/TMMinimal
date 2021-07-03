@@ -1,4 +1,3 @@
-class ErrorList;
 class HighwaySegment;
 class HighwaySystem;
 class Waypoint;
@@ -61,7 +60,7 @@ class Route
 	static std::unordered_set<std::string>	all_wpt_files;
 	static std::mutex awf_mtx;		// for locking the all_wpt_files set when erasing processed WPTs
 
-	Route(std::string &, HighwaySystem *, ErrorList &);
+	Route(std::string &, HighwaySystem *);
 
-	void read_wpt(unsigned int, WaypointQuadtree *, ErrorList *);
+	void read_wpt(unsigned int, WaypointQuadtree *);
 };

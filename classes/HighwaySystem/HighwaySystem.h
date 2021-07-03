@@ -1,4 +1,3 @@
-class ErrorList;
 class Route;
 #include <list>
 #include <mutex>
@@ -33,5 +32,5 @@ class HighwaySystem
 	static std::list<HighwaySystem*>::iterator it;
 	static std::vector<HighwaySystem*> in_flight;
 
-	HighwaySystem(std::string &, ErrorList &);
+	HighwaySystem(std::string &);
 };

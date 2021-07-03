@@ -7,7 +7,6 @@
 
 #include "Route.h"
 #include "../Args/Args.h"
-#include "../ErrorList/ErrorList.h"
 #include "../HighwaySystem/HighwaySystem.h"
 #include "../Waypoint/Waypoint.h"
 #include "../WaypointQuadtree/WaypointQuadtree.h"
@@ -15,7 +14,7 @@
 #include <fstream>
 #include <unordered_set>
 
-void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints, ErrorList *el)
+void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints)
 {	/* read data into the Route's waypoint list from a .wpt file */
 	extern std::mutex terminal_mtx;
 	//cout << "read_wpt on " << str() << endl;
@@ -27,7 +26,7 @@ void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints, Er
 	std::vector<char*> lines;
 	std::ifstream file(filename);
 	if (!file)
-	{	el->add_error("[Errno 2] No such file or directory: '" + filename + '\'');
+	{	std::cout << "ERROR: No such file or directory: '" + filename + '\'' << std::endl;
 		file.close();
 		return;
 	}

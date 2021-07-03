@@ -18,7 +18,6 @@ This module defines classes to represent the contents of a
 #include <thread>
 #include "classes/Args/Args.h"
 #include "classes/ElapsedTime/ElapsedTime.h"
-#include "classes/ErrorList/ErrorList.h"
 #include "classes/HighwaySystem/HighwaySystem.h"
 #include "classes/Route/Route.h"
 #include "classes/Waypoint/Waypoint.h"
@@ -47,13 +46,10 @@ int main(int argc, char *argv[])
 	time_t timestamp = time(0);
 	cout << "Start: " << ctime(&timestamp);
 
-	// create ErrorList
-	ErrorList el;
-
 	// Create a list of HighwaySystem objects, one per system in systems.csv file
 	cout << et.et() << "Reading systems list in " << Args::highwaydatapath << "/systems.csv." << endl;
 	file.open(Args::highwaydatapath+"/systems.csv");
-	if (!file) el.add_error("Could not open "+Args::highwaydatapath+"/systems.csv");
+	if (!file) cout << "ERROR: Could not open "+Args::highwaydatapath+"/systems.csv" << endl;
 	else {	getline(file, line); // ignore header line
 		list<string> ignoring;
 		while(getline(file, line))
@@ -63,7 +59,7 @@ int main(int argc, char *argv[])
 			{	ignoring.push_back("Ignored comment in systems.csv: " + line);
 				continue;
 			}
-			HighwaySystem *hs = new HighwaySystem(line, el);
+			HighwaySystem *hs = new HighwaySystem(line);
 					    // deleted on termination of program
 			if (!hs->is_valid) delete hs;
 			else {	HighwaySystem::syslist.push_back(hs);
@@ -94,14 +90,14 @@ int main(int argc, char *argv[])
 	std::vector<std::thread> thr(Args::numthreads);
 	HighwaySystem::it = HighwaySystem::syslist.begin();
 	#define THREADLOOP for (unsigned int t = 0; t < thr.size(); t++)
-	THREADLOOP thr[t] = thread(ReadWptThread, t, &list_mtx, &el, &all_waypoints);
+	THREADLOOP thr[t] = thread(ReadWptThread, t, &list_mtx, &all_waypoints);
 	THREADLOOP thr[t].join();
 	HighwaySystem::in_flight.clear();
       #else
 	for (HighwaySystem* h : HighwaySystem::syslist)
 	{	std::cout << h->systemname << std::flush;
 		for (Route* r : h->route_list)
-			r->read_wpt(0, &all_waypoints, &el);
+			r->read_wpt(0, &all_waypoints);
 		std::cout << "!" << std::endl;
 	}
       #endif

@@ -1,6 +1,5 @@
 #include "HighwaySystem.h"
 #include "../Args/Args.h"
-#include "../ErrorList/ErrorList.h"
 #include "../Route/Route.h"
 #include "../../functions/split.h"
 #include <cstring>
@@ -10,7 +9,7 @@ std::list<HighwaySystem*> HighwaySystem::syslist;
 std::list<HighwaySystem*>::iterator HighwaySystem::it;
 std::vector<HighwaySystem*> HighwaySystem::in_flight;
 
-HighwaySystem::HighwaySystem(std::string &line, ErrorList &el)
+HighwaySystem::HighwaySystem(std::string &line)
 {	std::ifstream file;
 	// parse systems.csv line
 	size_t NumFields = 6;
@@ -32,16 +31,16 @@ HighwaySystem::HighwaySystem(std::string &line, ErrorList &el)
 
 	// read chopped routes CSV
 	file.open(Args::highwaydatapath+"/hwy_data/_systems"+"/"+systemname+".csv");
-	if (!file) el.add_error("Could not open "+Args::highwaydatapath+"/hwy_data/_systems"+"/"+systemname+".csv");
+	if (!file) std::cout << "ERROR: Could not open "+Args::highwaydatapath+"/hwy_data/_systems"+"/"+systemname+".csv" << std::endl;
 	else {	getline(file, line); // ignore header line
 		while(getline(file, line))
 		{	if (line.empty()) continue;
 			// trim DOS newlines & trailing whitespace
 			while ( strchr("\r\t ", line.back()) ) line.pop_back();
-			Route* r = new Route(line, this, el);
+			Route* r = new Route(line, this);
 				   // deleted on termination of program
 			if (r->root.size()) route_list.push_back(r);
-			else {	el.add_error("Unable to find root in " + systemname +".csv line: ["+line+"]");
+			else {	std::cout << "ERROR: Unable to find root in " + systemname +".csv line: ["+line+"]" << std::endl;
 				delete r;
 			     }
 		}

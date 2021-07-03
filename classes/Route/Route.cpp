@@ -4,7 +4,7 @@
 std::unordered_set<std::string> Route::all_wpt_files;
 std::mutex Route::awf_mtx;
 
-Route::Route(std::string &line, HighwaySystem *sys, ErrorList &el)
+Route::Route(std::string &line, HighwaySystem *sys)
 {	/* initialize object from a .csv file line,
 	but do not yet read in waypoint file */
 

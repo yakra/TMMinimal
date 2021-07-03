@@ -4,10 +4,7 @@
 #include <iostream>
 
 #define debug
-void ReadWptThread
-(	unsigned int id, std::mutex* hs_mtx,
-	ErrorList* el,WaypointQuadtree* all_waypoints
-)
+void ReadWptThread(unsigned int id, std::mutex* hs_mtx, WaypointQuadtree* all_waypoints)
 {	//printf("Starting ReadWptThread %02i\n", id); fflush(stdout);
 	extern std::mutex terminal_mtx;
 	while (HighwaySystem::it != HighwaySystem::syslist.end())
@@ -35,7 +32,7 @@ void ReadWptThread
 		hs_mtx->unlock();
 		std::cout << h->systemname << std::flush;
 		for (Route *r : h->route_list)
-			r->read_wpt(id, all_waypoints, el);
+			r->read_wpt(id, all_waypoints);
 		std::cout << "!" << std::endl;
 	}
 }

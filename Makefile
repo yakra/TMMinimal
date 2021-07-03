@@ -11,7 +11,6 @@ STObjects = siteupdateST.o \
 CommonObjects = \
   classes/Args/Args.o \
   classes/ElapsedTime/ElapsedTime.o \
-  classes/ErrorList/ErrorList.o \
   classes/HighwaySystem/HighwaySystem.o \
   classes/Route/Route.o \
   classes/Route/read_wpt.o \
