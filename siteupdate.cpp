@@ -7,10 +7,6 @@ adding to the Travel Mapping Project database.
 (c) 2015-2021, Jim Teresco and Eric Bryant
 Original Python version by Jim Teresco, with contributions from Eric Bryant and the TravelMapping team
 C++ translation by Eric Bryant
-
-This module defines classes to represent the contents of a
-.csv file that lists the highways within a system, and a
-.wpt file that lists the waypoints for a given highway.
 */
 
 #include <thread>
@@ -20,7 +16,6 @@ This module defines classes to represent the contents of a
 #include "classes/Waypoint/Waypoint.h"
 #include "classes/WaypointQuadtree/WaypointQuadtree.h"
 #include "functions/crawl_hwy_data.h"
-#include "functions/split.h"
 #ifdef threading_enabled
 #include "functions/threads.h"
 #endif
@@ -41,27 +36,15 @@ int main(int argc, char *argv[])
 	// Create a list of HighwaySystem objects, one per system in systems.csv file
 	cout << "[No_Timestamp]" << "Reading systems list in " << Args::highwaydatapath << "/systems.csv." << endl;
 	file.open(Args::highwaydatapath+"/systems.csv");
-	if (!file) cout << "ERROR: Could not open "+Args::highwaydatapath+"/systems.csv" << endl;
-	else {	getline(file, line); // ignore header line
-		list<string> ignoring;
+		getline(file, line); // ignore header line
 		while(getline(file, line))
 		{	if (line.back() == 0x0D) line.erase(line.end()-1);	// trim DOS newlines
 			if (line.empty()) continue;
-			if (line[0] == '#')
-			{	ignoring.push_back("Ignored comment in systems.csv: " + line);
-				continue;
-			}
-			HighwaySystem *hs = new HighwaySystem(line);
-					    // deleted on termination of program
-			if (!hs->is_valid) delete hs;
-			else {	HighwaySystem::syslist.push_back(hs);
-			     }
+			if (line[0] == '#') continue; // ignore comments
+			HighwaySystem::syslist.push_back(new HighwaySystem(line));
+							 // deleted on termination of program
 		}
 		cout << endl;
-		// at the end, print the lines ignored
-		for (string& l : ignoring) cout << l << endl;
-		ignoring.clear();
-	     }
 	file.close();
 
 	// For tracking whether any .wpt files are in the directory tree
@@ -95,5 +78,4 @@ int main(int argc, char *argv[])
       #endif
 
 	cout << "Total run time: " << "[No_Timestamp]" << endl;
-
 }
