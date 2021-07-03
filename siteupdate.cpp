@@ -13,11 +13,8 @@ This module defines classes to represent the contents of a
 .wpt file that lists the waypoints for a given highway.
 */
 
-#include <cstring>
-#include <dirent.h>
 #include <thread>
 #include "classes/Args/Args.h"
-#include "classes/ElapsedTime/ElapsedTime.h"
 #include "classes/HighwaySystem/HighwaySystem.h"
 #include "classes/Route/Route.h"
 #include "classes/Waypoint/Waypoint.h"
@@ -41,13 +38,8 @@ int main(int argc, char *argv[])
 	Args::numthreads = 1;
       #endif
 
-	// start a timer for including elapsed time reports in messages
-	ElapsedTime et;
-	time_t timestamp = time(0);
-	cout << "Start: " << ctime(&timestamp);
-
 	// Create a list of HighwaySystem objects, one per system in systems.csv file
-	cout << et.et() << "Reading systems list in " << Args::highwaydatapath << "/systems.csv." << endl;
+	cout << "[No_Timestamp]" << "Reading systems list in " << Args::highwaydatapath << "/systems.csv." << endl;
 	file.open(Args::highwaydatapath+"/systems.csv");
 	if (!file) cout << "ERROR: Could not open "+Args::highwaydatapath+"/systems.csv" << endl;
 	else {	getline(file, line); // ignore header line
@@ -75,7 +67,7 @@ int main(int argc, char *argv[])
 	// For tracking whether any .wpt files are in the directory tree
 	// that do not have a .csv file entry that causes them to be
 	// read into the data
-	cout << et.et() << "Finding all .wpt files. " << flush;
+	cout << "[No_Timestamp]" << "Finding all .wpt files. " << flush;
 	crawl_hwy_data(Args::highwaydatapath+"/hwy_data", Route::all_wpt_files);
 	cout << Route::all_wpt_files.size() << " files found." << endl;
 
@@ -84,7 +76,7 @@ int main(int argc, char *argv[])
 	WaypointQuadtree all_waypoints(-90,-180,90,180);
 
 	// Next, read all of the .wpt files for each HighwaySystem
-	cout << et.et() << "Reading waypoints for all routes." << endl;
+	cout << "[No_Timestamp]" << "Reading waypoints for all routes." << endl;
       #ifdef threading_enabled
 	HighwaySystem::in_flight.assign(Args::numthreads,0);
 	std::vector<std::thread> thr(Args::numthreads);
@@ -102,8 +94,6 @@ int main(int argc, char *argv[])
 	}
       #endif
 
-	timestamp = time(0);
-	cout << "Finish: " << ctime(&timestamp);
-	cout << "Total run time: " << et.et() << endl;
+	cout << "Total run time: " << "[No_Timestamp]" << endl;
 
 }
