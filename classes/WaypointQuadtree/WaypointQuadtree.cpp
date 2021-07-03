@@ -75,7 +75,7 @@ void WaypointQuadtree::insert(unsigned int threadnum, Waypoint *w, bool init)
 				{	std::cout << "ReadWptThread " << threadnum << "     " <<
 					p << std::flush << '\t' << p->root_at_label() << std::flush;
 				}     )//*/
-				if (p->same_coords(w))
+				if (p->lat == w->lat && p->lng == w->lng)
 				{	other_w = p;
 					DEBUG (	COND std::cout << '!' << std::endl;
 						UNLOCK;

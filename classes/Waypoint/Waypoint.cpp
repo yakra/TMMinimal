@@ -43,12 +43,6 @@ Waypoint::Waypoint(char *line, Route *rte)
 	lng = strtod(&URL[lonBeg], 0);
 }
 
-bool Waypoint::same_coords(Waypoint *other)
-{	// return if this waypoint is colocated with the other,
-	// using exact lat,lng match
-	return lat == other->lat && lng == other->lng;
-}//*/
-
 std::string Waypoint::root_at_label()
 {	return route->root + "@" + label;
 }//*/
