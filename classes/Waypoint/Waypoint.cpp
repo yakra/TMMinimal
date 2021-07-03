@@ -9,11 +9,10 @@
 //#include <iostream>
 #endif
 
-#define pi 3.141592653589793238
-
 Waypoint::Waypoint(char *line, Route *rte)
 {	/* initialize object from a .wpt file line */
 	route = rte;
+	colocated = 0;
 
 	// parse WPT line
 	size_t spn = 0;
@@ -26,19 +25,13 @@ Waypoint::Waypoint(char *line, Route *rte)
 	// blank or contains only spaces, Route::read_wpt will not call this constructor.
 	std::string URL = alt_labels.back();	// last token is actually the URL...
 	alt_labels.pop_back();			// ...and not a label.
-	if (alt_labels.empty()) label = "NULL";
-	else {	label = alt_labels.front();	// first token is the primary label...
-		alt_labels.pop_front();		// ...and not an alternate.
-	     }
-	is_hidden = label[0] == '+';
-	colocated = 0;
+	// TMMinimal is intended for use with known good HighwayData commits with >=2 tokens per line
+	label = alt_labels.front();		// first token is the primary label...
+	alt_labels.pop_front();			// ...and not an alternate.
 
 	// parse URL
 	size_t latBeg = URL.find("lat=")+4;
 	size_t lonBeg = URL.find("lon=")+4;
-	if (latBeg == 3 || lonBeg == 3)
-	{	lat = 0;	lng = 0;	return;
-	}
 	lat = strtod(&URL[latBeg], 0);
 	lng = strtod(&URL[lonBeg], 0);
 }
@@ -46,5 +39,3 @@ Waypoint::Waypoint(char *line, Route *rte)
 std::string Waypoint::root_at_label()
 {	return route->root + "@" + label;
 }//*/
-
-#undef pi
