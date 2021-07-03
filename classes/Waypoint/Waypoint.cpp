@@ -75,72 +75,10 @@ Waypoint::Waypoint(char *line, Route *rte)
 	     }
 }
 
-std::string Waypoint::str()
-{	std::string ans = route->root + " " + label;
-	char coordstr[51];
-	sprintf(coordstr, "%.15g", lat);
-	if (!strchr(coordstr, '.')) strcat(coordstr, ".0"); // add single trailing zero to ints for compatibility with Python
-	ans += " (";
-	ans += coordstr;
-	ans += ',';
-	sprintf(coordstr, "%.15g", lng);
-	if (!strchr(coordstr, '.')) strcat(coordstr, ".0"); // add single trailing zero to ints for compatibility with Python
-	ans += coordstr;
-	return ans + ')';
-}//*/
-
 bool Waypoint::same_coords(Waypoint *other)
 {	// return if this waypoint is colocated with the other,
 	// using exact lat,lng match
 	return lat == other->lat && lng == other->lng;
-}//*/
-
-double Waypoint::distance_to(Waypoint *other)
-{	// return the distance in miles between this waypoint and another
-	// including the factor defined by the CHM project to adjust for
-	// unplotted curves in routes
-	// convert to radians
-	double rlat1 = lat * (pi/180);
-	double rlng1 = lng * (pi/180);
-	double rlat2 = other->lat * (pi/180);
-	double rlng2 = other->lng * (pi/180);
-
-	// haversine formula
-	double ans = asin(sqrt(pow(sin((rlat2-rlat1)/2),2) + cos(rlat1) * cos(rlat2) * pow(sin((rlng2-rlng1)/2),2))) * 7926.2; // EARTH_DIAMETER
-
-	return ans * 1.02112; // CHM/TM distance fudge factor to compensate for imprecision of mapping
-}//*/
-
-double Waypoint::angle(Waypoint *pred, Waypoint *succ)
-{	// return the angle in degrees formed by the waypoints between the
-	// line from pred to self and self to succ
-	// convert to radians
-	double rlatself = lat * (pi/180);
-	double rlngself = lng * (pi/180);
-	double rlatpred = pred->lat * (pi/180);
-	double rlngpred = pred->lng * (pi/180);
-	double rlatsucc = succ->lat * (pi/180);
-	double rlngsucc = succ->lng * (pi/180);
-
-	double x0 = cos(rlngpred)*cos(rlatpred);
-	double x1 = cos(rlngself)*cos(rlatself);
-	double x2 = cos(rlngsucc)*cos(rlatsucc);
-
-	double y0 = sin(rlngpred)*cos(rlatpred);
-	double y1 = sin(rlngself)*cos(rlatself);
-	double y2 = sin(rlngsucc)*cos(rlatsucc);
-
-	double z0 = sin(rlatpred);
-	double z1 = sin(rlatself);
-	double z2 = sin(rlatsucc);
-
-	return acos
-	(	( (x2-x1)*(x1-x0) + (y2-y1)*(y1-y0) + (z2-z1)*(z1-z0) )
-	/ sqrt	(	( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) + (z2-z1)*(z2-z1) )
-		*	( (x1-x0)*(x1-x0) + (y1-y0)*(y1-y0) + (z1-z0)*(z1-z0) )
-		)
-	)
-	*180/pi;
 }//*/
 
 std::string Waypoint::root_at_label()

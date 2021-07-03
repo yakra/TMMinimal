@@ -34,9 +34,6 @@ class Waypoint
 
 	Waypoint(char *, Route *);
 
-	std::string str();
 	bool same_coords(Waypoint *);
-	double distance_to(Waypoint *);
-	double angle(Waypoint *, Waypoint *);
 	std::string root_at_label();
 };
