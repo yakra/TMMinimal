@@ -1,15 +1,13 @@
 #include "ElapsedTime.h"
 
-ElapsedTime::ElapsedTime(int precision)
+ElapsedTime::ElapsedTime()
 {	start_time = std::chrono::steady_clock::now();
-	format = "[%.1f] ";
-	format[3] = '0' + precision;
-	str = new char[15+precision];
 }
 
 std::string ElapsedTime::et()
 {	using namespace std::chrono;
 	duration<double> elapsed = duration_cast<duration<double>>(steady_clock::now() - start_time);
-	sprintf(str, format.data(), elapsed.count());
+	char str[16];
+	sprintf(str, "[%.1f] ", elapsed.count());
 	return str;
 }

@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
       #endif
 
 	// start a timer for including elapsed time reports in messages
-	ElapsedTime et(Args::timeprecision);
+	ElapsedTime et;
 	time_t timestamp = time(0);
 	cout << "Start: " << ctime(&timestamp);
 
