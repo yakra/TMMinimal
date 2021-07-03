@@ -1,6 +1,5 @@
 #define debug
 #include "Waypoint.h"
-#include "../Datacheck/Datacheck.h"
 #include "../HighwaySystem/HighwaySystem.h"
 #include "../Route/Route.h"
 #include "../../functions/valid_num_str.h"
@@ -39,8 +38,7 @@ Waypoint::Waypoint(char *line, Route *rte)
 	size_t latBeg = URL.find("lat=")+4;
 	size_t lonBeg = URL.find("lon=")+4;
 	if (latBeg == 3 || lonBeg == 3)
-	{	Datacheck::add(route, label, "", "", "MALFORMED_URL", "MISSING_ARG(S)");
-		lat = 0;	lng = 0;	return;
+	{	lat = 0;	lng = 0;	return;
 	}
 	bool valid_coords = 1;
 	if (!valid_num_str(URL.data()+latBeg, '&'))
@@ -51,7 +49,6 @@ Waypoint::Waypoint(char *line, Route *rte)
 			while (lat_string.back() < 0)	lat_string.erase(lat_string.end()-1);
 			lat_string += "...";
 		}
-		Datacheck::add(route, label, "", "", "MALFORMED_LAT", lat_string);
 		valid_coords = 0;
 	}
 	if (!valid_num_str(URL.data()+lonBeg, '&'))
@@ -62,7 +59,6 @@ Waypoint::Waypoint(char *line, Route *rte)
 			while (lng_string.back() < 0)	lng_string.erase(lng_string.end()-1);
 			lng_string += "...";
 		}
-		Datacheck::add(route, label, "", "", "MALFORMED_LON", lng_string);
 		valid_coords = 0;
 	}
 	if (valid_coords)
