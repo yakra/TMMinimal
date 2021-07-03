@@ -147,16 +147,16 @@ int main(int argc, char *argv[])
 	Region::code_hash[Region::allregions.back()->code] = Region::allregions.back();
 
 	// Create a list of HighwaySystem objects, one per system in systems.csv file
-	cout << et.et() << "Reading systems list in " << Args::highwaydatapath << "/" << Args::systemsfile << "." << endl;
-	file.open(Args::highwaydatapath+"/"+Args::systemsfile);
-	if (!file) el.add_error("Could not open "+Args::highwaydatapath+"/"+Args::systemsfile);
+	cout << et.et() << "Reading systems list in " << Args::highwaydatapath << "/systems.csv." << endl;
+	file.open(Args::highwaydatapath+"/systems.csv");
+	if (!file) el.add_error("Could not open "+Args::highwaydatapath+"/systems.csv");
 	else {	getline(file, line); // ignore header line
 		list<string> ignoring;
 		while(getline(file, line))
 		{	if (line.back() == 0x0D) line.erase(line.end()-1);	// trim DOS newlines
 			if (line.empty()) continue;
 			if (line[0] == '#')
-			{	ignoring.push_back("Ignored comment in " + Args::systemsfile + ": " + line);
+			{	ignoring.push_back("Ignored comment in systems.csv: " + line);
 				continue;
 			}
 			HighwaySystem *hs = new HighwaySystem(line, el, countries);
