@@ -34,9 +34,8 @@ void ReadWptThread
 	      #endif
 		hs_mtx->unlock();
 		std::cout << h->systemname << std::flush;
-		bool usa_flag = h->country->first == "USA";
 		for (Route *r : h->route_list)
-			r->read_wpt(id, all_waypoints, el, usa_flag);
+			r->read_wpt(id, all_waypoints, el);
 		std::cout << "!" << std::endl;
 	}
 }

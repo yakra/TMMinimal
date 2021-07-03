@@ -4,10 +4,7 @@ class HGVertex;
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
-#include <utility>
 #include <vector>
-
-std::pair<std::string, std::string> *country_or_continent_by_code(std::string, std::vector<std::pair<std::string, std::string>>&);
 
 class Region
 {   /* This class encapsulates the contents of one .csv file line
@@ -39,7 +36,6 @@ class Region
     */
 
 	public:
-	std::pair<std::string, std::string> *country, *continent;
 	std::string code, name, type;
 	double active_only_mileage;
 	double active_preview_mileage;
@@ -51,7 +47,5 @@ class Region
 	static std::vector<Region*> allregions;
 	static std::unordered_map<std::string, Region*> code_hash;
 
-	Region (const std::string&,
-		std::vector<std::pair<std::string, std::string>>&,
-		ErrorList&);
+	Region (const std::string&, ErrorList&);
 };

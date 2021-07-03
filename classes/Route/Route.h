@@ -65,5 +65,5 @@ class Route
 
 	Route(std::string &, HighwaySystem *, ErrorList &);
 
-	void read_wpt(unsigned int, WaypointQuadtree *, ErrorList *, bool);
+	void read_wpt(unsigned int, WaypointQuadtree *, ErrorList *);
 };

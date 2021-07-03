@@ -22,7 +22,6 @@ class HighwaySystem
 
 	public:
 	std::string systemname;
-	std::pair<std::string, std::string> *country;
 	std::string fullname;
 	std::string color;
 	short tier;
@@ -37,5 +36,5 @@ class HighwaySystem
 	static std::list<HighwaySystem*>::iterator it;
 	static std::vector<HighwaySystem*> in_flight;
 
-	HighwaySystem(std::string &, ErrorList &, std::vector<std::pair<std::string,std::string>> &);
+	HighwaySystem(std::string &, ErrorList &);
 };

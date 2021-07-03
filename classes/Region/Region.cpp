@@ -3,18 +3,10 @@
 #include "../ErrorList/ErrorList.h"
 #include "../../functions/split.h"
 
-std::pair<std::string, std::string> *country_or_continent_by_code(std::string code, std::vector<std::pair<std::string, std::string>> &pair_vector)
-{	for (std::pair<std::string, std::string>& c : pair_vector)
-		if (c.first == code) return &c;
-	return 0;
-}//*/
-
 std::vector<Region*> Region::allregions;
 std::unordered_map<std::string, Region*> Region::code_hash;
 
-Region::Region (const std::string &line,
-		std::vector<std::pair<std::string, std::string>> &countries,
-		ErrorList &el)
+Region::Region (const std::string &line, ErrorList &el)
 {	active_only_mileage = 0;
 	active_preview_mileage = 0;
 	overall_mileage = 0;
@@ -25,7 +17,6 @@ Region::Region (const std::string &line,
 	split(line, fields, NumFields, ';');
 	if (NumFields != 5)
 	{	el.add_error("Could not parse regions.csv line: [" + line + "], expected 5 fields, found " + std::to_string(NumFields));
-		country   = country_or_continent_by_code("error", countries);
 		is_valid = 0;
 		return;
 	}
@@ -38,14 +29,6 @@ Region::Region (const std::string &line,
 	if (name.size() > DBFieldLength::regionName)
 		el.add_error("Region name > " + std::to_string(DBFieldLength::regionName)
 			   + " bytes in regions.csv line " + line);
-	// country
-	country = country_or_continent_by_code(country_str, countries);
-	if (!country)
-	{	el.add_error("Could not find country matching regions.csv line: " + line);
-		country = country_or_continent_by_code("error", countries);
-	}
-	// continent
-	continent = 0;
 	// regionType
 	if (type.size() > DBFieldLength::regiontype)
 		el.add_error("Region type > " + std::to_string(DBFieldLength::regiontype)

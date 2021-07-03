@@ -12,7 +12,7 @@ std::list<HighwaySystem*> HighwaySystem::syslist;
 std::list<HighwaySystem*>::iterator HighwaySystem::it;
 std::vector<HighwaySystem*> HighwaySystem::in_flight;
 
-HighwaySystem::HighwaySystem(std::string &line, ErrorList &el, std::vector<std::pair<std::string,std::string>> &countries)
+HighwaySystem::HighwaySystem(std::string &line, ErrorList &el)
 {	std::ifstream file;
 	// parse systems.csv line
 	size_t NumFields = 6;
@@ -24,8 +24,6 @@ HighwaySystem::HighwaySystem(std::string &line, ErrorList &el, std::vector<std::
 	// Removing sanity checks, as TMMinimal is to be tested
 	// with a HighwayData commit known to have valid data
 
-	// CountryCode
-	country = country_or_continent_by_code(country_str, countries);
 	// Tier
 	char *endptr;
 	tier = strtol(tier_str.data(), &endptr, 10);
