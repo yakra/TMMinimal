@@ -50,9 +50,6 @@ class Route
 	std::string root;
 	std::vector<Waypoint*> point_list;
 
-	static std::unordered_set<std::string>	all_wpt_files;
-	static std::mutex awf_mtx;		// for locking the all_wpt_files set when erasing processed WPTs
-
 	Route(std::string &, HighwaySystem *);
 
 	void read_wpt(unsigned int, WaypointQuadtree *);

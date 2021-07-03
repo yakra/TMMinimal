@@ -15,7 +15,6 @@ C++ translation by Eric Bryant
 #include "classes/Route/Route.h"
 #include "classes/Waypoint/Waypoint.h"
 #include "classes/WaypointQuadtree/WaypointQuadtree.h"
-#include "functions/crawl_hwy_data.h"
 #ifdef threading_enabled
 #include "functions/threads.h"
 #endif
@@ -46,13 +45,6 @@ int main(int argc, char *argv[])
 		}
 		cout << endl;
 	file.close();
-
-	// For tracking whether any .wpt files are in the directory tree
-	// that do not have a .csv file entry that causes them to be
-	// read into the data
-	cout << "[No_Timestamp]" << "Finding all .wpt files. " << flush;
-	crawl_hwy_data(Args::highwaydatapath+"/hwy_data", Route::all_wpt_files);
-	cout << Route::all_wpt_files.size() << " files found." << endl;
 
 	// For finding colocated Waypoints and concurrent segments, we have
 	// quadtree of all Waypoints in existence to find them efficiently

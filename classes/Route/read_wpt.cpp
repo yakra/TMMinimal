@@ -19,10 +19,6 @@ void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints)
 	extern std::mutex terminal_mtx;
 	//cout << "read_wpt on " << str() << endl;
 	std::string filename = Args::highwaydatapath + "/hwy_data" + "/" + rg_str + "/" + system->systemname + "/" + root + ".wpt";
-	// remove full path from all_wpt_files list
-	awf_mtx.lock();
-	all_wpt_files.erase(filename);
-	awf_mtx.unlock();
 	std::vector<char*> lines;
 	std::ifstream file(filename);
 	if (!file)

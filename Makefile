@@ -14,7 +14,6 @@ CommonObjects = \
   classes/Route/Route.o \
   classes/Route/read_wpt.o \
   classes/Waypoint/Waypoint.o \
-  functions/crawl_hwy_data.o \
   functions/split.o \
   functions/valid_num_str.o
 
