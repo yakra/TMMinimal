@@ -4,8 +4,6 @@
 /* t */ int Args::numthreads = 4;
 /* T */ int Args::timeprecision = 1;
 /* w */ std::string Args::highwaydatapath = "../../../HighwayData";
-/* p */ std::string Args::splitregionpath = "";
-/* p */ std::string Args::splitregion;
 const char* Args::exec;
 
 bool Args::init(int argc, char *argv[])
@@ -28,11 +26,6 @@ bool Args::init(int argc, char *argv[])
 			if (timeprecision>9) timeprecision=9;
 			n++;
 		}
-		else if ARG(2, "-p", "--splitregion")
-		{	splitregionpath = argv[n+1];
-			splitregion = argv[n+2];
-			n += 2;
-		}
 	}
 	#undef ARG
 	return 0;
@@ -41,7 +34,6 @@ bool Args::init(int argc, char *argv[])
 void Args::show_help()
 {	std::string indent(strlen(exec), ' ');
 	std::cout  <<  "usage: " << exec << " [-h] [-w HIGHWAYDATAPATH]\n";
-	std::cout  <<  indent << "        [-p SPLITREGIONPATH SPLITREGION]\n";
 	std::cout  <<  indent << "        [-t NUMTHREADS]\n";
 	std::cout  <<  indent << "        [-T TIMEPRECISION]\n";
 	std::cout  <<  "\n";
@@ -53,10 +45,6 @@ void Args::show_help()
 	std::cout  <<  "  -w HIGHWAYDATAPATH, --highwaydatapath HIGHWAYDATAPATH\n";
 	std::cout  <<  "		        path to the root of the highway data directory\n";
 	std::cout  <<  "		        structure\n";
-	std::cout  <<  "  -p SPLITREGIONPATH SPLITREGION, --splitregion SPLITREGIONPATH SPLITREGION\n";
-	std::cout  <<  "		        Path to logs & .lists for a specific...\n";
-	std::cout  <<  "		        Region being split into subregions.\n";
-	std::cout  <<  "		        For Development.\n";
 	std::cout  <<  "  -t NUMTHREADS, --numthreads NUMTHREADS\n";
 	std::cout  <<  "		        Number of threads to use for concurrent tasks\n";
 	std::cout  <<  "  -T TIMEPRECISION, --timeprecision TIMEPRECISION\n";

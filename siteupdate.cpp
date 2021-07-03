@@ -176,8 +176,7 @@ int main(int argc, char *argv[])
 	// that do not have a .csv file entry that causes them to be
 	// read into the data
 	cout << et.et() << "Finding all .wpt files. " << flush;
-	unordered_set<string> splitsystems;
-	crawl_hwy_data(Args::highwaydatapath+"/hwy_data", Route::all_wpt_files, splitsystems, Args::splitregion, 0);
+	crawl_hwy_data(Args::highwaydatapath+"/hwy_data", Route::all_wpt_files);
 	cout << Route::all_wpt_files.size() << " files found." << endl;
 
 	// For finding colocated Waypoints and concurrent segments, we have

@@ -4,7 +4,6 @@
 class Args
 {	public:
 	/* w */ static std::string highwaydatapath;
-	/* p */ static std::string splitregion, splitregionpath;
 	/* t */ static int numthreads;
 	/* T */ static int timeprecision;
 		static const char* exec;
