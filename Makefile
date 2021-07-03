@@ -11,7 +11,6 @@ STObjects = siteupdateST.o \
 CommonObjects = \
   classes/Args/Args.o \
   classes/Datacheck/Datacheck.o \
-  classes/DBFieldLength/DBFieldLength.o \
   classes/ElapsedTime/ElapsedTime.o \
   classes/ErrorList/ErrorList.o \
   classes/HighwaySystem/HighwaySystem.o \

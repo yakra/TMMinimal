@@ -1,7 +1,6 @@
 #define debug
 #include "Waypoint.h"
 #include "../Datacheck/Datacheck.h"
-#include "../DBFieldLength/DBFieldLength.h"
 #include "../HighwaySystem/HighwaySystem.h"
 #include "../Route/Route.h"
 #include "../../functions/valid_num_str.h"
@@ -47,8 +46,8 @@ Waypoint::Waypoint(char *line, Route *rte)
 	if (!valid_num_str(URL.data()+latBeg, '&'))
 	{	size_t ampersand = URL.find('&', latBeg);
 		std::string lat_string = (ampersand == -1) ? URL.data()+latBeg : URL.substr(latBeg, ampersand-latBeg);
-		if (lat_string.size() > DBFieldLength::dcErrValue)
-		{	lat_string = lat_string.substr(0, DBFieldLength::dcErrValue-3);
+		if (lat_string.size() > 59)
+		{	lat_string = lat_string.substr(0, 59-3);
 			while (lat_string.back() < 0)	lat_string.erase(lat_string.end()-1);
 			lat_string += "...";
 		}
@@ -58,8 +57,8 @@ Waypoint::Waypoint(char *line, Route *rte)
 	if (!valid_num_str(URL.data()+lonBeg, '&'))
 	{	size_t ampersand = URL.find('&', lonBeg);
 		std::string lng_string = (ampersand == -1) ? URL.data()+lonBeg : URL.substr(lonBeg, ampersand-lonBeg);
-		if (lng_string.size() > DBFieldLength::dcErrValue)
-		{	lng_string = lng_string.substr(0, DBFieldLength::dcErrValue-3);
+		if (lng_string.size() > 59)
+		{	lng_string = lng_string.substr(0, 59-3);
 			while (lng_string.back() < 0)	lng_string.erase(lng_string.end()-1);
 			lng_string += "...";
 		}
