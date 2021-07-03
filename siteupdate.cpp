@@ -22,7 +22,6 @@ This module defines classes to represent the contents of a
 #include "classes/ElapsedTime/ElapsedTime.h"
 #include "classes/ErrorList/ErrorList.h"
 #include "classes/HighwaySystem/HighwaySystem.h"
-#include "classes/Region/Region.h"
 #include "classes/Route/Route.h"
 #include "classes/Waypoint/Waypoint.h"
 #include "classes/WaypointQuadtree/WaypointQuadtree.h"
@@ -52,29 +51,6 @@ int main(int argc, char *argv[])
 
 	// create ErrorList
 	ErrorList el;
-
-	// read region, country, continent descriptions
-	cout << et.et() << "Reading region descriptions." << endl;
-
-	//regions
-	file.open(Args::highwaydatapath+"/regions.csv");
-	if (!file) el.add_error("Could not open "+Args::highwaydatapath+"/regions.csv");
-	else {	getline(file, line); // ignore header line
-		while(getline(file, line))
-		{	if (line.back() == 0x0D) line.erase(line.end()-1);	// trim DOS newlines
-			if (line.empty()) continue;
-			Region* r = new Region(line, el);
-				    // deleted on termination of program
-			if (r->is_valid)
-			{	Region::allregions.push_back(r);
-				Region::code_hash[r->code] = r;
-			} else	delete r;
-		}
-	     }
-	file.close();
-	// create a dummy region to catch unrecognized region codes in .csv files
-	Region::allregions.push_back(new Region("error;unrecognized region code;error;error;unrecognized region code", el));
-	Region::code_hash[Region::allregions.back()->code] = Region::allregions.back();
 
 	// Create a list of HighwaySystem objects, one per system in systems.csv file
 	cout << et.et() << "Reading systems list in " << Args::highwaydatapath << "/systems.csv." << endl;

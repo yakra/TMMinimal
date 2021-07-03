@@ -1,7 +1,6 @@
 class ErrorList;
 class HighwaySegment;
 class HighwaySystem;
-class Region;
 class Waypoint;
 class WaypointQuadtree;
 #include <mutex>
@@ -49,8 +48,7 @@ class Route
 
 	public:
 	HighwaySystem *system;
-	Region *region;		// pointer to a valid Region object
-	std::string rg_str;	// region code string, retained for loading files in case no valid object is found
+	std::string rg_str;	// region code string
 	std::string route;
 	std::string banner;
 	std::string abbrev;

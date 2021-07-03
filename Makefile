@@ -15,7 +15,6 @@ CommonObjects = \
   classes/ElapsedTime/ElapsedTime.o \
   classes/ErrorList/ErrorList.o \
   classes/HighwaySystem/HighwaySystem.o \
-  classes/Region/Region.o \
   classes/Route/Route.o \
   classes/Route/read_wpt.o \
   classes/Waypoint/Waypoint.o \

@@ -1,7 +1,4 @@
-class ConnectedRoute;
 class ErrorList;
-class HGVertex;
-class Region;
 class Route;
 #include <list>
 #include <mutex>
