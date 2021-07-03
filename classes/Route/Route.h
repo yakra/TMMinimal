@@ -1,4 +1,3 @@
-class HighwaySegment;
 class HighwaySystem;
 class Waypoint;
 class WaypointQuadtree;
@@ -48,14 +47,8 @@ class Route
 	public:
 	HighwaySystem *system;
 	std::string rg_str;	// region code string
-	std::string route;
-	std::string banner;
-	std::string abbrev;
-	std::string city;
 	std::string root;
-
 	std::vector<Waypoint*> point_list;
-	std::vector<HighwaySegment*> segment_list;
 
 	static std::unordered_set<std::string>	all_wpt_files;
 	static std::mutex awf_mtx;		// for locking the all_wpt_files set when erasing processed WPTs
