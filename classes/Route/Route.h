@@ -48,7 +48,6 @@ class Route
 	HighwaySystem *system;
 	std::string rg_str;	// region code string
 	std::string root;
-	std::vector<Waypoint*> point_list;
 
 	Route(std::string &, HighwaySystem *);
 

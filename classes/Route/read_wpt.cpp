@@ -54,7 +54,6 @@ void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints)
 		if (lines[l][0] == 0) continue;
 		Waypoint *w = new Waypoint(lines[l], this);
 			      // deleted on termination of program, or immediately below if invalid
-		point_list.push_back(w);
 		all_waypoints->insert(threadnum, w, 1);
 	}
 	delete[] wptdata;
