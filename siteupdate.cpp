@@ -14,7 +14,6 @@ C++ translation by Eric Bryant
 #include "classes/HighwaySystem/HighwaySystem.h"
 #include "classes/Route/Route.h"
 #include "classes/Waypoint/Waypoint.h"
-#include "classes/WaypointQuadtree/WaypointQuadtree.h"
 #ifdef threading_enabled
 #include "functions/threads.h"
 #endif
@@ -46,10 +45,6 @@ int main(int argc, char *argv[])
 		cout << endl;
 	file.close();
 
-	// For finding colocated Waypoints and concurrent segments, we have
-	// quadtree of all Waypoints in existence to find them efficiently
-	WaypointQuadtree all_waypoints(-90,-180,90,180);
-
 	// Next, read all of the .wpt files for each HighwaySystem
 	cout << "[No_Timestamp]" << "Reading waypoints for all routes." << endl;
       #ifdef threading_enabled
@@ -57,14 +52,14 @@ int main(int argc, char *argv[])
 	std::vector<std::thread> thr(Args::numthreads);
 	HighwaySystem::it = HighwaySystem::syslist.begin();
 	#define THREADLOOP for (unsigned int t = 0; t < thr.size(); t++)
-	THREADLOOP thr[t] = thread(ReadWptThread, t, &list_mtx, &all_waypoints);
+	THREADLOOP thr[t] = thread(ReadWptThread, t, &list_mtx);
 	THREADLOOP thr[t].join();
 	HighwaySystem::in_flight.clear();
       #else
 	for (HighwaySystem* h : HighwaySystem::syslist)
 	{	std::cout << h->systemname << std::flush;
 		for (Route* r : h->route_list)
-			r->read_wpt(0, &all_waypoints);
+			r->read_wpt(0);
 		std::cout << "!" << std::endl;
 	}
       #endif

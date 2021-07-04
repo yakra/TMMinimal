@@ -1,2 +1,2 @@
 class WaypointQuadtree;
-void ReadWptThread   (unsigned int, std::mutex*, WaypointQuadtree*);
+void ReadWptThread(unsigned int, std::mutex*);

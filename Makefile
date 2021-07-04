@@ -2,11 +2,8 @@ CXX = clang++
 STD = -std=c++11
 CXXFLAGS = -Wno-comment -Wno-dangling-else -Wno-logical-op-parentheses
 
-MTObjects = siteupdateMT.o functions/threads.o \
-  classes/WaypointQuadtree/WaypointQuadtreeMT.o
-
-STObjects = siteupdateST.o \
-  classes/WaypointQuadtree/WaypointQuadtreeST.o
+MTObjects = siteupdateMT.o functions/threads.o
+STObjects = siteupdateST.o
 
 CommonObjects = \
   classes/Args/Args.o \
