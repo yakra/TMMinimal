@@ -9,12 +9,11 @@
 #include "../Args/Args.h"
 #include "../HighwaySystem/HighwaySystem.h"
 #include "../Waypoint/Waypoint.h"
-#include "../WaypointQuadtree/WaypointQuadtree.h"
 #include <cstring>
 #include <fstream>
 #include <unordered_set>
 
-void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints)
+void Route::read_wpt(unsigned int threadnum)
 {	/* read data into the Route's waypoint list from a .wpt file */
 	extern std::mutex terminal_mtx;
 	//cout << "read_wpt on " << str() << endl;
@@ -55,7 +54,6 @@ void Route::read_wpt(unsigned int threadnum, WaypointQuadtree *all_waypoints)
 		Waypoint *w = new Waypoint(lines[l], this);
 			      // deleted on termination of program, or immediately below if invalid
 		point_list.push_back(w);
-		all_waypoints->insert(threadnum, w, 1);
 	}
 	delete[] wptdata;
 
