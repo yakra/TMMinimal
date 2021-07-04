@@ -1,12 +1,7 @@
-class HGVertex;
-class HighwayGraph;
 class Route;
 #include <deque>
-#include <forward_list>
-#include <fstream>
 #include <list>
-#include <unordered_set>
-#include <vector>
+#include <string>
 
 class Waypoint
 {   /* This class encapsulates the information about a single waypoint
@@ -23,14 +18,9 @@ class Waypoint
 	public:
 	Route *route;
 	std::list<Waypoint*> *colocated;
-	HGVertex *vertex;
 	double lat, lng;
 	std::string label;
 	std::deque<std::string> alt_labels;
-	std::vector<Waypoint*> ap_coloc;
-	std::forward_list<Waypoint*> near_miss_points;
-	unsigned int point_num;
-	bool is_hidden;
 
 	Waypoint(char *, Route *);
 

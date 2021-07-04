@@ -9,6 +9,7 @@ Original Python version by Jim Teresco, with contributions from Eric Bryant and 
 C++ translation by Eric Bryant
 */
 
+#include <fstream>
 #include <thread>
 #include "classes/Args/Args.h"
 #include "classes/HighwaySystem/HighwaySystem.h"
